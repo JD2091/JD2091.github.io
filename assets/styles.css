@@ -462,53 +462,118 @@ footer {
 h3.skillset { font-size: .95rem; margin-bottom: .5rem; }
 
 
-/* ---------- print: the page itself, on paper ---------- */
+/* ---------- print / PDF export ----------
+   The PDF is this page. Same markup, same data, same renderer —
+   only the skin changes, so the two can never drift apart.
+   Target: 3 A4 pages. Check with the measurement script if you
+   add content; the budget is tight by design.
+   ---------------------------------------- */
 
-@page { margin: 14mm; }
+@page { size: A4; margin: 12mm 13mm; }
 
 @media print {
-  /* the attribute selector must match html[data-theme="dark"]'s
-     specificity or the dark palette wins and prints a black page */
+  /* must match html[data-theme="dark"]'s specificity or dark wins */
   html[data-theme], :root {
-    --paper:      #fff;
-    --paper-deep: #fff;
-    --ink:        #14181C;
-    --ink-soft:   #4A5560;
-    --rule:       #BFC5C9;
-    --signal:     #A8380F;
-    --teal:       #14403F;
+    --paper: #fff; --paper-deep: #fff;
+    --ink: #14181C; --ink-soft: #46525C;
+    --rule: #C8CDD1; --signal: #A8380F; --teal: #12403E;
   }
 
-  body { background: #fff; font-size: 10.5pt; line-height: 1.4; }
+  body {
+    background: #fff;
+    font-size: 9pt;
+    line-height: 1.3;
+    overflow-wrap: normal;
+  }
 
-  .skip, .nav, .rail__cv, .cta__actions { display: none !important; }
+  .skip, .nav, .rail__cv, #contact { display: none !important; }
 
   .shell { display: block; max-width: none; padding: 0; }
 
+  /* rail becomes a masthead */
   .rail {
     position: static;
     height: auto;
-    padding: 0 0 10pt;
+    display: block;
+    padding: 0 0 5pt;
+    margin-bottom: 2pt;
     border-right: 0;
     border-bottom: 1.2pt solid var(--ink);
     animation: none;
   }
-  .rail__foot { margin-top: .6rem; padding-top: 0; }
+  .rail__name { font-size: 19pt; line-height: 1; margin: 0; }
+  .rail__role { font-size: 9.5pt; margin: 2pt 0 0; max-width: none; color: var(--ink); }
+  .rail__place { font-size: 8pt; margin: 2pt 0 0; gap: .3rem; }
+  .rail__mode { font-size: 7.4pt; padding: 0 .3rem; }
+  .rail__foot { margin: 3pt 0 0; padding: 0; }
+  .rail__links { font-size: 8pt; gap: .2rem .7rem; }
 
   main { padding-bottom: 0; }
-  section { padding: 14pt 0 0; }
-  section:first-child { padding-top: 10pt; }
+  section { padding: 8pt 0 0; }
+  section:first-child { padding-top: 5pt; }
 
-  .sec-head { font-size: 15pt; margin-bottom: 8pt; }
+  .sec-head { font-size: 11.5pt; margin-bottom: 5pt; line-height: 1.1; }
   .sec-head::after { display: none; }
-  .sec-head::before { font-size: 8pt; margin-bottom: 3pt; }
+  .sec-head::before { font-size: 6.8pt; margin-bottom: 2pt; }
 
-  .record { grid-template-columns: repeat(3, 1fr); }
-  .cardgrid { grid-template-columns: 1fr 1fr; gap: 10pt 18pt; }
+  /* hero */
+  .hero h1 { font-size: 15pt; max-width: none; margin-bottom: 3pt; }
+  .eyebrow { font-size: 7.2pt; margin-bottom: 4pt; }
+  #heroBody { columns: 2; column-gap: 14pt; }
+  #heroBody p { margin: 0 0 4pt; font-size: 8.6pt; }
+  #heroBody p:first-of-type { font-size: 8.6pt; }
 
-  /* never split a job, card or credential across a page break */
-  .job, .card, .metric, .credlist li { page-break-inside: avoid; break-inside: avoid; }
-  .sec-head { page-break-after: avoid; break-after: avoid; }
-
-  a { text-decoration: none; }
+  /* metrics — force 3 across; the A4 box is narrower than the 64rem breakpoint */
+  .record {
+    margin-top: 7pt;
+    border-top: 1.2pt solid var(--ink);
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 14pt;
   }
+  .metric { padding: 4pt 0 5pt; }
+  .metric__v { font-size: 14pt; }
+  .metric__l { font-size: 8.2pt; margin-top: 1pt; }
+  .metric__n { font-size: 7.8pt; margin-top: 1pt; }
+
+  /* cards: projects, writing, talks */
+  .cardgrid { grid-template-columns: 1fr 1fr; gap: 7pt 14pt; }
+  .card { padding-left: 7pt; border-left-width: 1.5pt; }
+  .card__meta { font-size: 7pt; }
+  .card__title { font-size: 9pt; margin: 1pt 0 1pt; }
+  .card__sub { font-size: 8pt; }
+  .card p { margin: 2pt 0 2pt; font-size: 8.4pt; }
+  .card__links { font-size: 7.8pt; gap: .2rem .7rem; }
+
+  /* experience */
+  .job { padding: 0 0 6pt 7pt; border-left-width: 1.5pt; }
+  .job::before { width: 5px; height: 5px; left: -3.5px; top: 3pt; }
+  .job__when { font-size: 7.2pt; }
+  .job__title { font-size: 9.4pt; }
+  .job__org { font-size: 8.2pt; }
+  .job__flag { font-size: 7.6pt; margin: 2pt 0 0; padding-left: 4pt; }
+  .job ul { margin: 2pt 0 0; padding-left: 9pt; }
+  .job li { margin-bottom: 1pt; font-size: 8.4pt; }
+  .job--older { opacity: 1; }
+
+  /* toolkit + credentials — same breakpoint problem as .record */
+  .grid2 { grid-template-columns: 1fr 1fr; gap: 5pt 16pt; }
+  .skillset { margin-bottom: 5pt; }
+  .skillset h3 { font-size: 8.4pt; margin-bottom: 1pt; }
+  .skillset p { font-size: 8.2pt; }
+  .credhead { font-size: 8.4pt; margin-bottom: 2pt; }
+  .credhead--gap { margin-top: 6pt; }
+  .credlist li { padding: 2pt 0; }
+  .credlist li div { font-size: 8.4pt; }
+  .credlist span { font-size: 7.2pt; }
+
+  /* recognition reads fine in two columns */
+  #recognition .credlist { columns: 2; column-gap: 16pt; }
+  #recognition .credlist li { break-inside: avoid; }
+
+  /* page-break discipline */
+  .job, .card, .metric, .credlist li, .skillset { page-break-inside: avoid; break-inside: avoid; }
+  .sec-head { page-break-after: avoid; break-after: avoid; }
+  section { page-break-inside: auto; }
+
+  a { text-decoration: none; color: var(--teal); }
+}

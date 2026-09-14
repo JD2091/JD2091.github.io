@@ -227,6 +227,12 @@
 
   /* ---------------- wire up ---------------- */
 
+  function printPage() {
+    Array.prototype.forEach.call(document.querySelectorAll(".js-print"), function (b) {
+      b.addEventListener("click", function () { window.print(); });
+    });
+  }
+
   function init() {
     renderRail();
     renderHero();
@@ -238,6 +244,7 @@
     renderCredentials();
     renderContact();
     navSpy();
+    printPage();
   }
 
   if (document.readyState === "loading") {

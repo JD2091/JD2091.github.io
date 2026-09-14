@@ -1,7 +1,7 @@
 /* ============================================================
    PROFILE DATA — single source of truth.
-   Edit this file to correct anything. Both index.html and
-   resume.html render from here. Nothing else to touch.
+   Edit this file to correct anything. Both the site and
+   the printed PDF render from here. Nothing else to touch.
    ============================================================ */
 
 window.PROFILE = {
@@ -50,7 +50,7 @@ window.PROFILE = {
     items: [
       { value: "6+", label: "Customer accounts managed",
         note: "Technical account ownership across enterprise UiPath programmes." },
-      { value: "$22.5M", label: "ARR supported",
+      { value: "$20M+", label: "ARR supported",
         note: "Technical support for renewal and adoption across the account portfolio." },
       { value: "20+", label: "NHS processes automated",
         note: "Live across ServiceNow, Oracle SBS, HealthRoster, SystmOne, ESR and eRS." },
@@ -136,12 +136,6 @@ window.PROFILE = {
       bullets: [
         "Delivered 20+ automated processes across NHS trusts, building UiPath infrastructure on Azure for a multi-tenant RPA environment across multiple providers.",
         "Created Azure DevOps CI/CD pipelines deploying automation packages straight to Orchestrator, cloud VMs or local machines."
-      ],
-      resumeExtra: [
-        "Automated ServiceNow, Oracle SBS, Oracle BI, HealthRoster, SystmOne, CareNotes, Lorenzo, ESR, Trac, LMS and eRS, in teams of four to ten.",
-        "Wrote the PowerShell behind ARM template deployment and tenant creation.",
-        "Ran R&D on UiPath Computer Vision for Tata CLiQ, and automated SAP vendor master and repeat PO creation for Supermax from emailed attachments.",
-        "Mentored junior developers, monitored Orchestrator, and owned Go-Live documentation and best-practice standards."
       ]
     },
     {
@@ -153,9 +147,6 @@ window.PROFILE = {
       older: true,
       bullets: [
         "Built Chorus Manager, an invoice upload and management utility for France's mandatory Chorus Pro B2G portal, and StarQuery Suite, a BI tool for querying multiple databases under central governance."
-      ],
-      resumeExtra: [
-        "C# .NET, WinForms, REST APIs, SQL Server and SQLite, with direct client interaction throughout."
       ]
     },
     {
@@ -167,9 +158,6 @@ window.PROFILE = {
       older: true,
       bullets: [
         "Worked on Genisys Configurator for ICICI Lombard, the platform underwriters use to generate insurance products, policies and customer schedules."
-      ],
-      resumeExtra: [
-        "Built in ASP.NET MVC over Oracle Enterprise."
       ]
     }
   ],
@@ -323,13 +311,5 @@ window.PROFILE = {
   education: [
     { qualification: "B.E. Computer Science", institute: "Gujarat Technological University", year: "2014" },
     { qualification: "HSC Science", institute: "Gujarat State Board", year: "2010" }
-  ],
-
-  /* ---------- RESUME PAGE ---------- */
-  // resume.html renders from this file. The summary below is the only
-  // resume-specific prose; everything else is shared with the site.
-  resume: {
-    summary:
-      "Technical Account Manager with eleven years in software and eight in enterprise automation, currently owning the technical relationship for UiPath programmes at WonderBotz. Background is hands-on: twenty-plus live processes across NHS England and its secondary trusts, UiPath infrastructure and CI/CD built on Azure, and a year on client site in the UK as development lead. Current focus is agentic automation \u2014 coding agents, MCP servers, Coded Apps, and the governance that decides whether any of it reaches production. Writes and speaks regularly for the UiPath community."
-  }
+  ]
 };
