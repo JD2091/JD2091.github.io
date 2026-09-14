@@ -521,20 +521,59 @@ h3.skillset { font-size: .95rem; margin-bottom: .5rem; }
 
 .printonly { display: none; }
 
-/* ---------- print: letter only ---------- */
+/* ---------- print: the page itself, on paper ----------
+   The cover-letter print rules used to live here and hid every section
+   that was not #coverletter — which on this page meant all of them, so
+   printing produced a blank sheet. They now live in coverletter.css,
+   loaded only by extras.html. These rules print THIS page.
+   ------------------------------------------------------ */
+
+@page { margin: 14mm; }
 
 @media print {
-  .rail, .nav, section:not(#coverletter), .tool__intro, .settings,
-  .btnrow, .output__head, footer, .jd-block, .status, .sec-head,
-  #letter { display: none !important; }
-  body { background: #fff; color: #000; font-size: 11.5pt; }
-  .shell { display: block; padding: 0; }
-  .tool { background: #fff; border: 0; padding: 0; margin: 0; }
-  section { padding: 0; }
-  .printonly {
-    display: block;
-    white-space: pre-wrap;
-    font-family: var(--serif);
-    line-height: 1.5;
+  /* the attribute selector must match html[data-theme="dark"]'s
+     specificity or the dark palette wins and prints a black page */
+  html[data-theme], :root {
+    --paper:      #fff;
+    --paper-deep: #fff;
+    --ink:        #14181C;
+    --ink-soft:   #4A5560;
+    --rule:       #BFC5C9;
+    --signal:     #A8380F;
+    --teal:       #14403F;
   }
+
+  body { background: #fff; font-size: 10.5pt; line-height: 1.4; }
+
+  .skip, .nav, .rail__cv, .cta__actions { display: none !important; }
+
+  .shell { display: block; max-width: none; padding: 0; }
+
+  .rail {
+    position: static;
+    height: auto;
+    padding: 0 0 10pt;
+    border-right: 0;
+    border-bottom: 1.2pt solid var(--ink);
+    animation: none;
+  }
+  .rail__foot { margin-top: .6rem; padding-top: 0; }
+
+  main { padding-bottom: 0; }
+  section { padding: 14pt 0 0; }
+  section:first-child { padding-top: 10pt; }
+
+  .sec-head { font-size: 15pt; margin-bottom: 8pt; }
+  .sec-head::after { display: none; }
+  .sec-head::before { font-size: 8pt; margin-bottom: 3pt; }
+
+  .record { grid-template-columns: repeat(3, 1fr); }
+  .cardgrid { grid-template-columns: 1fr 1fr; gap: 10pt 18pt; }
+
+  /* never split a job, card or credential across a page break */
+  .job, .card, .metric, .credlist li { page-break-inside: avoid; break-inside: avoid; }
+  .sec-head { page-break-after: avoid; break-after: avoid; }
+
+  a { text-decoration: none; }
+  .printonly { display: none; }
 }

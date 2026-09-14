@@ -200,8 +200,8 @@
       li.appendChild(v);
       $("contactList").appendChild(li);
     });
-    $("foot").textContent = P.identity.name + " · " + P.identity.location + " · last updated " +
-      new Date().toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    $("foot").textContent = P.identity.name + " · " + P.identity.location +
+      (P.identity.lastUpdated ? " · last updated " + P.identity.lastUpdated : "");
   }
 
   /* ---------------- nav highlight ---------------- */
@@ -349,7 +349,8 @@
         ]
       })
     }).then(readJson).then(function (d) {
-      return ((d.choices || [])[0] || {}).message.content.trim();
+      var msg = ((d.choices || [])[0] || {}).message || {};
+      return (msg.content || "").trim();
     });
   }
 

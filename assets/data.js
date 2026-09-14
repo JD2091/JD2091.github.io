@@ -22,6 +22,10 @@ window.PROFILE = {
     email: "jeet.doshi2091@gmail.com",
     phone: "+91 8080318584",
     experienceYears: "11+",
+    // Shown in the footer. Bump this when you change the content —
+    // it used to be generated from new Date(), which meant the site
+    // always claimed to be current no matter how stale it was.
+    lastUpdated: "September 2026",
     links: {
       linkedin: "https://www.linkedin.com/in/jeet-doshi-28408071",
       hashnode: "https://jdoshi2091.hashnode.dev",
