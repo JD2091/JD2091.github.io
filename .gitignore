@@ -2,6 +2,7 @@
 # Never deploy this publicly; run it locally instead.
 extras.html
 assets/coverletter.css
+assets/coverletter.js
 
 # Superseded by resume.html, which renders from assets/data.js
 assets/resume-source.html
@@ -14,3 +15,5 @@ Thumbs.db
 desktop.ini
 .DS_Store
 .vscode/
+COVER-LETTER.md
+_to_delete/

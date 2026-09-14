@@ -4,8 +4,7 @@ A static, data-driven portfolio and resume. No build step, no dependencies, no f
 Live at **https://jd2091.github.io**
 
 Everything on the site renders at load time from a single JavaScript object in
-`assets/data.js`. Correct a fact there and the homepage, the resume page and the
-cover-letter generator all change together.
+`assets/data.js`. Correct a fact there and both pages change together.
 
 ---
 
@@ -15,7 +14,6 @@ cover-letter generator all change together.
 |---|---|
 | `index.html` | The portfolio — intro, selected work, experience, writing, talks, toolkit, credentials, recognition, contact |
 | `resume.html` | A resume rendered from the same data, with an **Export PDF** button that prints to A4 |
-| `extras.html` | A private cover-letter generator. **Not in this repo** — see [The cover-letter tool](#the-cover-letter-tool) |
 
 ## Files
 
@@ -23,7 +21,7 @@ cover-letter generator all change together.
 index.html                  portfolio page — markup only, no content
 resume.html                 resume page — markup only, no content
 .nojekyll                   tells GitHub Pages to serve files as-is
-.gitignore                  keeps the private tool out of the repo
+.gitignore                  local-only files kept out of the repo
 
 assets/
   data.js                   ← ALL CONTENT LIVES HERE
@@ -42,7 +40,7 @@ Three ideas, and that's the whole architecture:
 
 1. **`data.js` defines `window.PROFILE`** — a plain object with `identity`, `positioning`,
    `now`, `closing`, `experience`, `projects`, `writing`, `speaking`, `skills`,
-   `certifications`, `awards`, `education`, `resume` and `coverLetter`.
+   `certifications`, `awards`, `education` and `resume`.
 2. **The HTML files contain no content.** They are empty containers with `id` attributes.
 3. **`app.js` and `resume.js` fill them in** on `DOMContentLoaded`. Every node is built with
    `createElement` and `textContent` — never `innerHTML` — so nothing in `data.js` can inject
@@ -53,10 +51,10 @@ Each render function returns early if its target element is missing, which is wh
 
 ## Running it locally
 
-Double-click `index.html`. That's it for the portfolio and resume.
+Double-click `index.html`. There is nothing to install or build.
 
-To serve it properly (needed only for the cover-letter tool, which browsers block on
-`file://`):
+To serve it over HTTP instead — closer to how it behaves once deployed, and the only way
+to test absolute paths:
 
 ```bash
 cd this-folder
@@ -153,26 +151,11 @@ for `jd2091.github.io` and replace all occurrences with your own origin.
 
 ---
 
-## The cover-letter tool
-
-`extras.html` pastes in a job description and drafts a cover letter, either from an LLM API
-or an offline keyword template. It is **deliberately excluded from this repo** by
-`.gitignore`, along with `assets/coverletter.css`, because it stores an API key in browser
-`localStorage` and calls provider APIs directly from the page. That is fine on your own
-machine and wrong on a public URL.
-
-The code that drives it still lives in `assets/app.js` (roughly lines 225–545: key storage,
-Anthropic/OpenAI/Gemini clients, prompt builder, offline template). It is inert without
-`extras.html` — every listener is behind an `if ($("generate"))` guard — but it does mean
-the public site downloads about 24 KB of JavaScript it never runs. If you don't want the
-tool, delete that block.
-
 ## Known gotchas
 
-- **Print styles are page-specific.** `styles.css` prints the portfolio; `resume.css` prints
-  the resume; `coverletter.css` prints the letter alone. They must not be merged — the
-  cover-letter rules hide every section that isn't the letter, which on any other page means
-  all of them.
+- **Print styles are page-specific.** `styles.css` prints the portfolio, `resume.css` prints
+  the resume to A4. Keep them separate — a print rule that hides sections on one page will
+  blank the other.
 - **The dark theme is set by `data-theme="dark"` on `<html>`.** A full light palette exists in
   `:root` but nothing toggles it. If you add a toggle, note that `html[data-theme="dark"]` is
   more specific than `:root`, so overrides need to match that specificity — the print block
