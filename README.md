@@ -79,9 +79,9 @@ Open `assets/data.js`. Everything is there and commented. Fields worth knowing:
 - `identity.kicker` / `identity.headline` — the two lines at the top of the hero
 - `identity.workMode` — the small badge beside the location. Set to `""` to hide it
 - `identity.links` — **all three keys are required**: `linkedin`, `hashnode`, `github`.
-  Omitting one produces a dead `href="undefined"` link and an empty contact row, with no
-  console warning. If you have no blog, point `hashnode` at whatever you want that row to
-  link to, and rename the row via `ui.contact.articles` and `ui.railLinks.hashnode`
+  Omitting one is reported by name in the console. If you have no blog, point `hashnode` at
+  whatever you want that row to link to, and rename the row via `ui.contact.articles` and
+  `ui.railLinks.hashnode`
 - `identity.lastUpdated` — the footer date. **Bump it manually** when you change content;
   it used to be generated from `new Date()`, which meant the site always claimed to be
   current no matter how stale it was

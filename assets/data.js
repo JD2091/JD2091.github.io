@@ -110,7 +110,7 @@ window.PROFILE = {
   // posts and delivery history — review the wording.
   positioning: [
     "I sit between the customer and the platform. Day to day that means owning the technical relationship for enterprise automation programmes at WonderBotz — shaping what gets built, proving it works, and staying accountable for whether the customer is still running it a year later.",
-    "None of that is advice from the sidelines. The nine years before this role were hands-on: automation across NHS trusts, UiPath infrastructure and CI/CD on Azure, and a stretch on client site in Reading as RPA development lead.",
+    "None of that is advice from the sidelines. The eight years before this role were hands-on: automation across NHS trusts, UiPath infrastructure and CI/CD on Azure, and a stretch on client site in Reading as RPA development lead.",
     "Most of my current attention goes to agentic automation — coding agents that write automations, MCP servers, Coded Apps, and the governance that decides whether an enterprise can actually put them into production."
   ],
 
@@ -153,7 +153,8 @@ window.PROFILE = {
       start: "Apr 2025",
       end: "Present",
       location: "Bengaluru, India",
-      mode: "On-site",
+      // Keep in step with identity.workMode — both render on the same page.
+      mode: "Remote",
       current: true,
       bullets: [
         "Own the technical account relationship for enterprise intelligent automation customers, from solution shaping through delivery and ongoing platform health.",

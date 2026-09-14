@@ -392,6 +392,12 @@
         if (!P.identity[k]) problems.push("PROFILE.identity." + k + " is empty");
       });
       if (!P.identity.links) problems.push("PROFILE.identity.links is missing");
+      else ["linkedin", "hashnode", "github"].forEach(function (k) {
+        if (!P.identity.links[k]) {
+          problems.push("PROFILE.identity.links." + k + " is empty — its rail link and " +
+            "contact row would render with href=\"undefined\"");
+        }
+      });
     }
 
     var seen = {};
