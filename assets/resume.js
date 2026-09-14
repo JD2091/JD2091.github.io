@@ -1,7 +1,7 @@
 /* ============================================================
    resume.html renders entirely from assets/data.js.
-   Nothing here holds content — correct data.js and the resume,
-   the site and the cover letters all move together.
+   Nothing here holds content — correct data.js and both the
+   resume and the site move together.
    ============================================================ */
 
 (function () {

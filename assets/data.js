@@ -1,7 +1,7 @@
 /* ============================================================
    PROFILE DATA — single source of truth.
-   Edit this file to correct anything. The site and the cover
-   letter generator both read from here. Nothing else to touch.
+   Edit this file to correct anything. Both index.html and
+   resume.html render from here. Nothing else to touch.
    ============================================================ */
 
 window.PROFILE = {
@@ -329,26 +329,5 @@ window.PROFILE = {
   resume: {
     summary:
       "Technical Account Manager with eleven years in software and eight in enterprise automation, currently owning the technical relationship for UiPath programmes at WonderBotz. Background is hands-on: twenty-plus live processes across NHS England and its secondary trusts, UiPath infrastructure and CI/CD built on Azure, and a year on client site in the UK as development lead. Current focus is agentic automation \u2014 coding agents, MCP servers, Coded Apps, and the governance that decides whether any of it reaches production. Writes and speaks regularly for the UiPath community."
-  },
-
-  /* ---------- COVER LETTER SETTINGS ---------- */
-  coverLetter: {
-    targetWords: 400,
-    tone: "polite and professional",
-    signOff: "Warm regards",
-    // Compact facts the model is allowed to draw on. Keep it truthful:
-    // anything not here should not appear in a letter.
-    evidence: [
-      "11+ years in software and automation; last 8 focused on RPA and intelligent automation with UiPath.",
-      "Currently Technical Account Manager and line manager at WonderBotz, owning technical relationships for enterprise automation customers in Bengaluru.",
-      "Delivered 20+ live automated processes across NHS England and secondary trusts, spanning ServiceNow, Oracle SBS, HealthRoster, SystmOne, Lorenzo, ESR and eRS.",
-      "Spent a year on client site in Reading, UK as client-facing RPA development lead.",
-      "Built UiPath infrastructure on Azure and Azure DevOps CI/CD pipelines deploying straight to Orchestrator; wrote the PowerShell and ARM templates behind it.",
-      "Works hands-on with coding agents (Claude Code, OpenAI Codex), MCP servers and agent skills to build automations, utilities and Coded Apps.",
-      "Publishes long-form technical articles and open-source utilities for the UiPath community; speaks at UiPath community events in Mumbai and Ahmedabad.",
-      "Engineering background in C# .NET, ASP.NET MVC, SQL Server and Oracle before moving into automation.",
-      "Certified: UiPath Advanced RPA Developer v1.0, UiPath RPA Developer, Claude Certified Associate — Foundations.",
-      "Recognised with Customer Delight awards for NHS delivery and service line awards for Azure infrastructure and CI/CD work."
-    ]
   }
 };

@@ -394,43 +394,7 @@ main { counter-reset: sec; }
 }
 .credlist span { font-family: var(--mono); font-size: .72rem; color: var(--ink-soft); white-space: nowrap; }
 
-/* ---------- cover letter tool ---------- */
-
-.tool {
-  background: var(--paper-deep);
-  border-top: 3px solid var(--ink);
-  padding: 2rem 1.5rem 2.25rem;
-  margin-top: 1.5rem;
-}
-@media (min-width: 45rem) { .tool { padding: 2.25rem 2rem 2.5rem; } }
-
-.tool__intro { max-width: var(--measure); margin: 0 0 1.5rem; }
-
-label, .fieldlabel {
-  display: block;
-  font-family: var(--sans);
-  font-size: .82rem;
-  font-weight: 600;
-  margin-bottom: .35rem;
-}
-.hint { font-family: var(--sans); font-weight: 400; font-size: .78rem; color: var(--ink-soft); }
-
-textarea, input[type="text"], input[type="password"], select {
-  width: 100%;
-  font-family: var(--sans);
-  font-size: .92rem;
-  color: var(--ink);
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  padding: .6rem .7rem;
-  border-radius: 0;
-}
-textarea { font-family: var(--serif); font-size: 1rem; line-height: 1.55; resize: vertical; }
-textarea:focus, input:focus, select:focus { border-color: var(--ink); }
-
-.field { margin-bottom: 1.1rem; }
-.fieldrow { display: grid; gap: 1rem; }
-@media (min-width: 40rem) { .fieldrow { grid-template-columns: 1fr 1fr; } }
+/* ---------- buttons ---------- */
 
 .btn {
   font-family: var(--sans);
@@ -447,47 +411,6 @@ textarea:focus, input:focus, select:focus { border-color: var(--ink); }
 .btn[disabled] { opacity: .45; cursor: not-allowed; }
 .btn--ghost { background: transparent; color: var(--ink); }
 .btn--ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.btn--small { font-size: .8rem; padding: .42rem .8rem; }
-
-.btnrow { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
-
-details.settings { margin: 0 0 1.3rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-details.settings > summary {
-  cursor: pointer;
-  font-family: var(--sans);
-  font-size: .85rem;
-  font-weight: 600;
-  padding: .7rem 0;
-  list-style: none;
-}
-details.settings > summary::-webkit-details-marker { display: none; }
-details.settings > summary::before { content: "+ "; color: var(--signal); }
-details.settings[open] > summary::before { content: "– "; }
-.settings__body { padding: .25rem 0 1.1rem; }
-
-.status {
-  font-family: var(--mono);
-  font-size: .74rem;
-  color: var(--ink-soft);
-  min-height: 1.2em;
-}
-.status--error { color: var(--signal); }
-
-.output { margin-top: 1.6rem; }
-.output__head {
-  display: flex; flex-wrap: wrap; gap: .75rem;
-  justify-content: space-between; align-items: baseline;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: .5rem; margin-bottom: .9rem;
-}
-.output__count { font-family: var(--mono); font-size: .72rem; color: var(--ink-soft); }
-#letter {
-  min-height: 26rem;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  padding: 1.4rem 1.5rem;
-}
-.empty { font-family: var(--sans); font-size: .9rem; color: var(--ink-soft); }
 
 /* ---------- contact ---------- */
 
@@ -519,14 +442,8 @@ footer {
 
 h3.skillset { font-size: .95rem; margin-bottom: .5rem; }
 
-.printonly { display: none; }
 
-/* ---------- print: the page itself, on paper ----------
-   The cover-letter print rules used to live here and hid every section
-   that was not #coverletter — which on this page meant all of them, so
-   printing produced a blank sheet. They now live in coverletter.css,
-   loaded only by extras.html. These rules print THIS page.
-   ------------------------------------------------------ */
+/* ---------- print: the page itself, on paper ---------- */
 
 @page { margin: 14mm; }
 
@@ -575,5 +492,4 @@ h3.skillset { font-size: .95rem; margin-bottom: .5rem; }
   .sec-head { page-break-after: avoid; break-after: avoid; }
 
   a { text-decoration: none; }
-  .printonly { display: none; }
-}
+  }
