@@ -29,17 +29,21 @@ assets/
 
 Three ideas, and that's the whole architecture:
 
-1. **`data.js` defines `window.PROFILE`** — a plain object with `identity`, `positioning`,
+1. **`data.js` defines `window.PROFILE`** — `identity`, `sections`, `ui`, `positioning`,
    `now`, `closing`, `experience`, `projects`, `writing`, `speaking`, `skills`,
    `certifications`, `awards` and `education`.
-2. **`index.html` contains no content.** It is a set of empty containers with `id`
-   attributes.
-3. **`app.js` fills them in** on `DOMContentLoaded`. Every node is built with
-   `createElement` and `textContent` — never `innerHTML` — so nothing in `data.js` can
-   inject markup.
+2. **`index.html`'s body is an empty skeleton** — a rail with empty containers and an
+   empty `<main>`. It contains no name, no headings, no nav items, no button labels.
+3. **`app.js` builds the page from `PROFILE.sections`.** That one array decides which
+   sections exist, their order, their ids, their `<h2>` headings, and the rail nav — so
+   the nav can never list a section that isn't there, or miss one that is.
 
-Each render function returns early if its target element is missing, so `app.js` is safe
-to load on a page that doesn't have every section.
+Every node is built with `createElement` and `textContent` — never `innerHTML` — so
+nothing in `data.js` can inject markup.
+
+`app.js` validates the manifest on load: an unknown `render` name, a duplicate id, or a
+missing required `identity` field is reported in the console by name, rather than silently
+dropping a section.
 
 ## The PDF is the page
 
@@ -63,7 +67,7 @@ test absolute paths:
 
 ```bash
 cd this-folder
-python -m http.server 8000
+python3 -m http.server 8000   # `python` on Windows
 ```
 
 Then open `http://localhost:8000`.
@@ -74,11 +78,19 @@ Open `assets/data.js`. Everything is there and commented. Fields worth knowing:
 
 - `identity.kicker` / `identity.headline` — the two lines at the top of the hero
 - `identity.workMode` — the small badge beside the location. Set to `""` to hide it
+- `identity.links` — **all three keys are required**: `linkedin`, `hashnode`, `github`.
+  Omitting one produces a dead `href="undefined"` link and an empty contact row, with no
+  console warning. If you have no blog, point `hashnode` at whatever you want that row to
+  link to, and rename the row via `ui.contact.articles` and `ui.railLinks.hashnode`
 - `identity.lastUpdated` — the footer date. **Bump it manually** when you change content;
   it used to be generated from `new Date()`, which meant the site always claimed to be
   current no matter how stale it was
 - `now.items` — the six metric cards. Keep to six; the grid is three columns
 - `projects` — things you built. `writing` — things you wrote *about* them. Keep separate
+- `sections` — **the page itself.** Order, ids, headings and nav labels. Delete an entry to
+  drop a section; move one to reorder. `render` must be one of: `hero`, `projects`,
+  `experience`, `writing`, `talks`, `skills`, `credentials`, `awards`, `contact`
+- `ui` — every piece of visible chrome: skip link, nav label, button and contact-row labels
 
 ---
 
@@ -89,20 +101,22 @@ clean copy.
 
 ### 1. Replace the content
 
-Rewrite **`assets/data.js`** end to end.
+Rewrite **`assets/data.js`** end to end. That covers everything visible: content, section
+headings, nav labels, button labels, contact-row labels, and the favicon initials. The
+body of `index.html` needs no edits at all.
 
-### 2. Fix the values that live outside `data.js`
+### 2. Fix the `<head>` of `index.html`
 
-These are the ones people miss:
+Social crawlers do not execute JavaScript, so these cannot be rendered at runtime and are
+the only values outside `data.js`:
 
 | File | What to change |
 |---|---|
-| `index.html` | `<title>`, `<meta name="description">`, and the **favicon** — an inline SVG with the initials `JD`; search for `%3EJD%3C` |
-| `index.html` | The fallback name in `<h1 class="rail__name" id="railName">` — JS replaces it, but it's what crawlers and no-JS visitors see |
+| `index.html` | `<title>` and `<meta name="description">` |
+| `index.html` | `<html lang="en">` — change it if your content is not in English |
 | `index.html` | Every social tag: `canonical`, `og:url`, `og:site_name`, `og:title`, `og:description`, `og:image`, `og:image:alt`, `twitter:*`, `author`, `article:author`, `article:published_time`, `profile:*` |
 | `index.html` | The **JSON-LD `Person` block** at the end of `<head>` — name, job title, employer, URL, address, `sameAs` links |
-| `assets/app.js` | Lines ~194–195 hardcode the **visible label** of the LinkedIn and Articles contact rows while the URLs come from `data.js`. Change both or they'll disagree |
-| `assets/og.html` | Name, role, and the photo filename |
+| `assets/og.html` | **Every visible string**: the kicker, the headline, the name, the role, and the photo filename. The kicker and headline are easy to miss — they contain none of the previous owner's identifying words, so a search for their name will not find them, and the share card will quietly keep the old wording |
 | `assets/styles.css` | The name in the header comment (cosmetic) |
 
 Replace everything in `assets/imgs/`.
@@ -167,7 +181,7 @@ for `jd2091.github.io` and replace every occurrence.
 - **Grids collapse in print.** The A4 content box is ~696px, below the 45rem/64rem screen
   breakpoints, so `.record` and `.grid2` need their columns forced explicitly in the print
   block or they silently drop to one column.
-- **No tests, no CI.** About 1,400 lines of vanilla JS, HTML and CSS. Check it in a browser.
+- **No tests, no CI.** About 1,300 lines of vanilla JS, HTML and CSS. Check it in a browser.
 
 ## Reuse
 

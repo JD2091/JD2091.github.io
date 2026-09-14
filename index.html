@@ -2,13 +2,13 @@
 <!--
   Reuse guide:
   - This file owns document structure, accessibility landmarks, and metadata.
-  - Visible portfolio content is normally supplied by assets/data.js and rendered
-    into the empty, id-based containers below by assets/app.js.
-  - Keep container ids in sync with app.js. Classes are styling hooks used by
-    assets/styles.css and can be changed only if the stylesheet changes too.
-  - Search this file for the current person's name/domain when cloning the site;
-    SEO, social-card, favicon, and JSON-LD values cannot be populated reliably by
-    client-side JavaScript and therefore remain hardcoded here.
+  - All visible content and chrome comes from assets/data.js, rendered by
+    assets/app.js. The body below is an empty skeleton.
+  - PROFILE.sections drives which sections exist, their order, their headings,
+    and the rail navigation.
+  - When cloning the site, edit assets/data.js. The only values that must also
+    change here are in <head>: social crawlers do not execute JavaScript, so the
+    title, description, social cards, and JSON-LD cannot be rendered at runtime.
 -->
 <html lang="en" data-theme="dark">
 <head>
@@ -69,9 +69,9 @@
   ]
 }
 </script>
-<!-- The favicon is an inline SVG. Replace the JD text (URL-encoded as %3EJD%3C)
-     and its colours when adapting the site for another person. -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314181C'/%3E%3Ctext x='32' y='43' font-family='Arial,Helvetica,sans-serif' font-size='26' font-weight='700' fill='%23FF7A45' text-anchor='middle'%3EJD%3C/text%3E%3C/svg%3E">
+<!-- Placeholder icon; app.js replaces it with one drawn from
+     PROFILE.identity.initials and the current theme colours. -->
+<link rel="icon" href="data:,">
 <!-- Remote fonts have local fallbacks in styles.css, so the page remains usable
      if Google Fonts is unavailable. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,113 +81,33 @@
 </head>
 <body>
 
-<!-- Keyboard users see this link when it receives focus. -->
-<a class="skip" href="#main">Skip to content</a>
+<!-- Every visible string below is supplied by assets/data.js. This file holds
+     structure and metadata only — personalising the site means editing data.js.
+     The one exception is the <head>: social crawlers do not run JavaScript, so
+     the title, social cards, and JSON-LD must stay hardcoded here. -->
+
+<a class="skip" href="#main" id="skipLink"></a>
 
 <div class="shell">
 
   <!-- On desktop this is a sticky left rail; print CSS turns it into a masthead. -->
   <header class="rail">
-    <h1 class="rail__name" id="railName">Jeet V. Doshi</h1>
+    <h1 class="rail__name" id="railName"></h1>
     <p class="rail__role" id="railRole"></p>
     <p class="rail__place" id="railPlace"></p>
 
-    <!-- These href fragments must match the section ids. app.js also uses that
-         relationship to mark the section currently visible in the viewport. -->
-    <nav class="nav" aria-label="Sections">
-      <ul>
-        <li><a href="#intro">Introduction</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="#speaking">Talks</a></li>
-        <li><a href="#toolkit">Toolkit</a></li>
-        <li><a href="#credentials">Credentials</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <!-- Nav items are generated from PROFILE.sections, so they cannot drift
+         out of step with the sections that actually exist. -->
+    <nav class="nav" id="nav"></nav>
 
-    <div class="rail__foot">
+    <div class="rail__foot" id="railFoot">
       <div class="rail__links" id="railLinks"></div>
-      <button class="rail__cv js-print" type="button">Download PDF</button>
     </div>
   </header>
 
-  <!-- Section headings are static so the document retains a useful outline.
-       The empty containers are populated from window.PROFILE at startup. -->
-  <main id="main">
+  <!-- Sections are generated from PROFILE.sections in order. -->
+  <main id="main"></main>
 
-    <section id="intro" class="hero">
-      <p class="eyebrow" id="heroKicker"></p>
-      <h1 id="heroLine"></h1>
-      <div id="heroBody"></div>
-      <!-- Metric cards from PROFILE.now.items. Six items fit the intended grid. -->
-      <div class="record" id="heroRecord"></div>
-    </section>
-
-    <section id="work">
-      <h2 class="sec-head">Selected work</h2>
-      <!-- The cardgrid class is shared by projects, writing, and talks. -->
-      <div class="cardgrid" id="projectList"></div>
-    </section>
-
-    <section id="experience">
-      <h2 class="sec-head">Experience</h2>
-      <div class="trail" id="trail"></div>
-    </section>
-
-    <section id="writing">
-      <h2 class="sec-head">Writing</h2>
-      <div class="cardgrid" id="writingList"></div>
-    </section>
-
-    <section id="speaking">
-      <h2 class="sec-head">Talks and community</h2>
-      <div class="cardgrid" id="talkList"></div>
-    </section>
-
-    <section id="toolkit">
-      <h2 class="sec-head">Toolkit</h2>
-      <!-- app.js distributes skill groups alternately between two columns. -->
-      <div class="grid2" id="skillGrid"></div>
-    </section>
-
-    <section id="credentials">
-      <h2 class="sec-head">Credentials</h2>
-      <div class="grid2">
-        <div>
-          <h3 class="credhead">Certifications</h3>
-          <ul class="credlist" id="certList"></ul>
-        </div>
-        <div>
-          <h3 class="credhead">Education</h3>
-          <ul class="credlist" id="eduList"></ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="recognition">
-      <h2 class="sec-head">Recognition</h2>
-      <ul class="credlist" id="awardList"></ul>
-    </section>
-
-    <section id="contact">
-      <h2 class="sec-head">Contact</h2>
-      <div class="cta">
-        <p class="eyebrow" id="ctaEyebrow"></p>
-        <p class="cta__head" id="ctaHead"></p>
-        <p class="cta__body" id="ctaBody"></p>
-        <div class="cta__actions">
-          <a class="btn" id="ctaMail" href="#">Email me</a>
-          <button class="btn btn--ghost js-print" type="button">Download PDF</button>
-        </div>
-      </div>
-      <ul class="contact__list" id="contactList"></ul>
-      <!-- The footer text includes PROFILE.identity.lastUpdated. -->
-      <footer id="foot"></footer>
-    </section>
-
-  </main>
 </div>
 
 <!-- Load order is a contract: data.js creates window.PROFILE before app.js reads

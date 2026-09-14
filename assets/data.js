@@ -33,6 +33,9 @@ window.PROFILE = {
     // from here — nothing in index.html hard-codes them.
     kicker: "Technical account ownership / Agentic automation / Enterprise adoption",
     headline: "I advise enterprises on what I've shipped.",
+    // Used for the generated favicon. Omit and app.js derives it from `name`
+    // (first initial + last initial).
+    initials: "JD",
     pronouns: "He/Him",
     email: "jeet.doshi2091@gmail.com",
     phone: "+91 8080318584",
@@ -47,6 +50,59 @@ window.PROFILE = {
       linkedin: "https://www.linkedin.com/in/jeet-doshi-28408071",
       hashnode: "https://jdoshi2091.hashnode.dev",
       github: "https://github.com/jd2091"
+    }
+  },
+
+  // ---------- PAGE STRUCTURE ----------
+  // This array is the page. It controls section order, section ids, the <h2>
+  // headings, and the rail navigation — all from one place, so nav and content
+  // can never fall out of sync.
+  //
+  //   id      required. Becomes the section id and the nav anchor.
+  //   nav     optional. Label in the rail nav. Omit to render the section
+  //           without listing it in the nav.
+  //   heading optional. Renders as the section <h2>. Omit for the hero.
+  //   render  required. Names a renderer in app.js. Valid values are listed in
+  //           RENDERERS there; an unknown name is reported in the console.
+  //   class   optional. Extra class on the <section> element.
+  //   columns credentials only. The two sub-headings, in order.
+  //
+  // To drop a section, delete its entry. To reorder, move it.
+  sections: [
+    { id: "intro",       nav: "Introduction", render: "hero",        class: "hero" },
+    { id: "work",        nav: "Work",         render: "projects",    heading: "Selected work" },
+    { id: "experience",  nav: "Experience",   render: "experience",  heading: "Experience" },
+    { id: "writing",     nav: "Writing",      render: "writing",     heading: "Writing" },
+    { id: "speaking",    nav: "Talks",        render: "talks",       heading: "Talks and community" },
+    { id: "toolkit",     nav: "Toolkit",      render: "skills",      heading: "Toolkit" },
+    { id: "credentials", nav: "Credentials",  render: "credentials", heading: "Credentials",
+      columns: ["Certifications", "Education"] },
+    { id: "recognition", nav: "Recognition",  render: "awards",      heading: "Recognition" },
+    { id: "contact",     nav: "Contact",      render: "contact",     heading: "Contact" }
+  ],
+
+  // ---------- INTERFACE STRINGS ----------
+  // Every piece of visible chrome, so index.html holds no copy of its own.
+  ui: {
+    skip: "Skip to content",
+    navLabel: "Sections",
+    printButton: "Download PDF",
+    emailButton: "Email me",
+    // Row labels in the contact table. The values beside them are derived from
+    // identity.links, so a changed URL can never disagree with its label.
+    contact: {
+      email: "Email",
+      phone: "Phone",
+      linkedin: "LinkedIn",
+      articles: "Articles",
+      location: "Based in"
+    },
+    // Labels for the four rail links, in render order.
+    railLinks: {
+      linkedin: "LinkedIn",
+      hashnode: "Articles",
+      github: "GitHub",
+      email: "Email"
     }
   },
 
