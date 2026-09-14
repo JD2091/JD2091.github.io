@@ -1,14 +1,24 @@
 /* ============================================================
    Renders index.html from window.PROFILE.
    Content lives in assets/data.js — edit there, not here.
+
+   This file intentionally uses ES5-compatible syntax and browser APIs only, so
+   the project can be opened directly without compilation or dependencies. To add
+   a section: add its data shape, add a container in index.html, write a render
+   function here, call it from init(), and add its styles in styles.css.
    ============================================================ */
 
+// The IIFE keeps helper and renderer names out of the global browser namespace.
 (function () {
   "use strict";
 
+  // data.js must be loaded first. P is a short, read-only-by-convention alias.
   var P = window.PROFILE;
+  // Small id lookup helper used throughout the renderers.
   var $ = function (id) { return document.getElementById(id); };
 
+  // Build nodes with textContent rather than innerHTML. Besides keeping rendering
+  // predictable, this prevents profile text from being interpreted as markup.
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -18,11 +28,14 @@
   function link(href, text, cls) {
     var a = el("a", cls, text);
     a.href = href;
+    // Only web URLs open a new tab; mailto:, tel:, and fragment links stay local.
     if (/^https?:/.test(href)) { a.target = "_blank"; a.rel = "noopener"; }
     return a;
   }
 
-  /* ---------------- render ---------------- */
+  /* ---------------- content renderers ----------------
+     Each renderer owns one page region. Most return early if their container is
+     absent, which makes it safe to reuse app.js with a reduced page template. */
 
   function renderRail() {
     if (!$("railName")) return;
@@ -46,6 +59,7 @@
     if (!body) return;
     if ($("heroKicker")) $("heroKicker").textContent = P.identity.kicker || "";
     if ($("heroLine")) $("heroLine").textContent = P.identity.headline || "";
+    // One array entry becomes one paragraph; no newline parsing is required.
     P.positioning.forEach(function (para) { body.appendChild(el("p", null, para)); });
 
     var rec = $("heroRecord");
@@ -63,6 +77,7 @@
     var trail = $("trail");
     if (!trail) return;
     P.experience.forEach(function (job) {
+      // State flags become modifier classes; CSS owns their visual treatment.
       var d = el("article", "job" + (job.current ? " job--current" : "") + (job.older ? " job--older" : ""));
       d.appendChild(el("div", "job__when", job.start + " — " + job.end));
       d.appendChild(el("h3", "job__title", job.title));
@@ -149,6 +164,7 @@
       var box = el("div", "skillset");
       box.appendChild(el("h3", null, s.group));
       box.appendChild(el("p", null, s.items.join(", ")));
+      // Alternating by index balances groups without needing column data fields.
       (i % 2 === 0 ? colA : colB).appendChild(box);
     });
     grid.appendChild(colA);
@@ -188,6 +204,8 @@
       $("ctaMail").href = "mailto:" + P.identity.email;
     }
 
+    // Visible LinkedIn/article labels are intentionally shorter than their URLs.
+    // Change these two labels as well as data.js when cloning the portfolio.
     var rows = [
       ["Email", link("mailto:" + P.identity.email, P.identity.email)],
       ["Phone", link("tel:" + P.identity.phone.replace(/\s/g, ""), P.identity.phone)],
@@ -207,12 +225,14 @@
       (P.identity.lastUpdated ? " · last updated " + P.identity.lastUpdated : "");
   }
 
-  /* ---------------- nav highlight ---------------- */
+  /* ---------------- navigation highlight ---------------- */
 
   function navSpy() {
     var links = Array.prototype.slice.call(document.querySelectorAll(".nav a"));
     var map = {};
     links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+    // Navigation remains fully usable on older browsers; it only loses the live
+    // highlight when IntersectionObserver is unavailable.
     if (!("IntersectionObserver" in window)) return;
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -221,6 +241,8 @@
           if (map[e.target.id]) map[e.target.id].setAttribute("aria-current", "true");
         }
       });
+    // The narrow active band near the top changes the marker soon after a section
+    // enters the reading area instead of waiting for most of it to be visible.
     }, { rootMargin: "-10% 0px -70% 0px" });
     document.querySelectorAll("main section").forEach(function (s) { obs.observe(s); });
   }
@@ -229,11 +251,13 @@
 
   function printPage() {
     Array.prototype.forEach.call(document.querySelectorAll(".js-print"), function (b) {
+      // The browser print dialog plus @media print is the PDF export mechanism.
       b.addEventListener("click", function () { window.print(); });
     });
   }
 
   function init() {
+    // Render in document order, then attach progressive-enhancement behaviours.
     renderRail();
     renderHero();
     renderProjects();
@@ -247,6 +271,8 @@
     printPage();
   }
 
+  // Usually the scripts run after the DOM because they sit at the end of body.
+  // This guard also supports moving them into head later with `defer` omitted.
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else { init(); }

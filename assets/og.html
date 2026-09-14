@@ -1,12 +1,25 @@
 <!DOCTYPE html>
+<!--
+  Social-share card source (this page is not linked from the portfolio UI).
+
+  To reuse:
+  1. Replace the text and image path below.
+  2. Open this file with network access so the web fonts can load.
+  3. Capture the page at exactly 1200 x 630 pixels.
+  4. Save the result as assets/og.png and update absolute social-image URLs in
+     index.html. Social platforms consume the PNG, not this HTML source.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>OG card</title>
+<!-- These weights match the main site's typography. System fallbacks in the
+     variables below keep the composition usable when fonts fail to load. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+  /* Keep the canvas dimensions fixed: Open Graph previews use a 1.91:1 image. */
   :root{
     --paper:#14181C; --ink:#ECEEEF; --ink-soft:#9AA3AA;
     --rule:#2C3238; --signal:#FF7A45;
@@ -17,6 +30,7 @@
   html,body{width:1200px;height:630px}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);overflow:hidden}
 
+  /* Text receives the flexible column; the portrait remains a fixed circle. */
   .card{position:relative;width:1200px;height:630px;display:grid;
         grid-template-columns:1fr 320px;align-items:center;
         gap:48px;padding:64px 72px}
@@ -36,6 +50,8 @@
 </style>
 </head>
 <body>
+  <!-- Content is duplicated intentionally because this standalone capture source
+       does not load data.js or app.js. Keep it aligned when profile copy changes. -->
   <div class="card">
     <div>
       <p class="kicker">Technical account ownership / Agentic automation / Enterprise adoption</p>
@@ -44,6 +60,8 @@
       <p class="name">Jeet V. Doshi</p>
       <p class="role">Technical Account Manager &middot; WonderBotz</p>
     </div>
+    <!-- Empty alt is correct here: the exported image is decorative, and this
+         source page is not the accessible representation of the portfolio. -->
     <img class="shot" src="imgs/Jeet Profile pic.jpeg" alt="">
   </div>
 </body>

@@ -1,11 +1,24 @@
 /* ============================================================
-   PROFILE DATA — single source of truth.
-   Edit this file to correct anything. Both the site and
-   the printed PDF render from here. Nothing else to touch.
+   PROFILE DATA — single source of truth for visible content.
+   Both the site and printed PDF render from this object.
+
+   Reuse notes:
+   - Keep property names stable unless the matching renderer in app.js changes.
+   - Arrays render in the order written here; reorder entries to reorder the UI.
+   - Optional fields are documented near their use. Use an empty string or omit
+     an optional URL rather than inventing placeholder content.
+   - SEO/social metadata is duplicated in index.html because crawlers may not run
+     JavaScript. Update that file as well when changing identity information.
    ============================================================ */
 
+// A global is used deliberately: the site runs directly from disk without ES
+// modules, a server, package manager, or build step. app.js reads this value.
 window.PROFILE = {
 
+  // Core identity used by the rail, contact section, CTA, and footer. The
+  // linkedinHeadline, shortName, pronouns, and experienceYears fields are kept
+  // as reusable profile metadata even though the current renderer does not show
+  // all of them.
   identity: {
     name: "Jeet V. Doshi",
     shortName: "Jeet Doshi",
@@ -29,6 +42,8 @@ window.PROFILE = {
     // always claimed to be current no matter how stale it was.
     lastUpdated: "September 2026",
     links: {
+      // app.js expects all three keys. External HTTP(S) links automatically open
+      // in a new tab with rel="noopener".
       linkedin: "https://www.linkedin.com/in/jeet-doshi-28408071",
       hashnode: "https://jdoshi2091.hashnode.dev",
       github: "https://github.com/jd2091"
@@ -43,8 +58,9 @@ window.PROFILE = {
     "Most of my current attention goes to agentic automation — coding agents that write automations, MCP servers, Coded Apps, and the governance that decides whether an enterprise can actually put them into production."
   ],
 
-  // Headline metrics beside the introduction. Keep these to six —
-  // the numeral is what a reader takes away, the note is the proof.
+  // Headline metrics beside the introduction. Each item requires value + label;
+  // note is optional. Keep these to six to preserve the intended 3x2 grid.
+  // `heading` is reserved for reuse and is not currently rendered.
   now: {
     heading: "Currently",
     items: [
@@ -70,7 +86,10 @@ window.PROFILE = {
     body: "Enterprise automation programmes, agentic patterns on the UiPath platform, or a community session \u2014 I am happy to start a conversation."
   },
 
-  /* ---------- EXPERIENCE (dates per LinkedIn) ---------- */
+  /* ---------- EXPERIENCE (dates per LinkedIn) ----------
+     Required: org, title, start, end, bullets[].
+     Optional: location, mode, highlight, current, older.
+     current adds the orange timeline marker; older reduces screen opacity. */
   experience: [
     {
       org: "WonderBotz",
@@ -162,7 +181,9 @@ window.PROFILE = {
     }
   ],
 
-  /* ---------- PROJECTS (things built, as opposed to things written) ---------- */
+  /* ---------- PROJECTS (things built, as opposed to things written) ----------
+     Required: name, blurb, stack[]. Optional: kind, repo, article.
+     Cards with no URLs simply omit their link row. */
   projects: [
     {
       name: "Data Fabric Migration Tool",
@@ -201,7 +222,9 @@ window.PROFILE = {
     }
   ],
 
-  /* ---------- WRITING ---------- */
+  /* ---------- WRITING ----------
+     Required: title, blurb, tags[], url. Optional: repo.
+     Keep articles separate from projects even when they describe the same work. */
   writing: [
     {
       title: "Coded Apps on UiPath, end to end",
@@ -240,7 +263,9 @@ window.PROFILE = {
     }
   ],
 
-  /* ---------- SPEAKING ---------- */
+  /* ---------- SPEAKING ----------
+     Required: event, host, date, format, detail, links[].
+     A link entry has { label, url }; use [] when a talk has no public link. */
   speaking: [
     {
       event: "Master Coded Apps: From Fundamentals to Advance",
@@ -266,7 +291,9 @@ window.PROFILE = {
     }
   ],
 
-  /* ---------- SKILLS ---------- */
+  /* ---------- SKILLS ----------
+     Each group has a heading and a flat items array. app.js alternates groups
+     between the left and right columns, preserving order within each column. */
   skills: [
     {
       group: "Automation platform",
@@ -290,7 +317,9 @@ window.PROFILE = {
     }
   ],
 
-  /* ---------- CREDENTIALS ---------- */
+  /* ---------- CREDENTIALS ----------
+     These compact records share a two-column label/year presentation. Keep year
+     as a string so values such as "Sep 2023" are displayed without conversion. */
   certifications: [
     { name: "Claude Certified Associate — Foundations", issuer: "Anthropic", year: "2026" },
     { name: "UiPath Agentic Automation Associate", issuer: "UiPath", year: "2025" },
