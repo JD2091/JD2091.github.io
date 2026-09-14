@@ -29,6 +29,9 @@
     $("railName").textContent = P.identity.name;
     $("railRole").textContent = P.identity.role + ", " + P.identity.org;
     $("railPlace").textContent = P.identity.location;
+    if (P.identity.workMode) {
+      $("railPlace").appendChild(el("span", "rail__mode", P.identity.workMode));
+    }
 
     var wrap = $("railLinks");
     var L = P.identity.links;

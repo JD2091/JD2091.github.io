@@ -147,6 +147,25 @@ a:hover { color: var(--signal); }
   letter-spacing: .01em;
   color: var(--ink-soft);
   margin: .7rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .5rem;
+}
+/* current working arrangement — teal, so it never reads as the
+   signal colour used for links and section headings */
+.rail__mode {
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  padding: .05rem .38rem .1rem;
+  line-height: 1.45;
+  white-space: nowrap;
 }
 
 .nav { margin-top: 2.25rem; }

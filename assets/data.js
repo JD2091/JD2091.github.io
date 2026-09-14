@@ -14,6 +14,8 @@ window.PROFILE = {
     linkedinHeadline:
       "Technical Account Manager at UiPath | Representing WonderBotz | Agentic Automation | AI Agents | Enterprise Automation Strategist",
     location: "Bengaluru, Karnataka, India",
+    // Small badge beside the location in the rail. Set to "" to hide it.
+    workMode: "Remote",
     // Hero kicker (the territory) and headline (the stance). Both render
     // from here — nothing in index.html hard-codes them.
     kicker: "Technical account ownership / Agentic automation / Enterprise adoption",
