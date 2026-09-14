@@ -1,0 +1,15 @@
+# Private cover-letter tool — holds an API key in browser storage.
+# Never deploy this publicly; run it locally instead.
+extras.html
+
+# Superseded by resume.html, which renders from assets/data.js
+assets/resume-source.html
+
+# Stray folder left by an earlier bad output path
+mnt/
+
+# OS / editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
