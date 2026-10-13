@@ -72,8 +72,8 @@ window.PROFILE = {
     { id: "intro",       nav: "Introduction", render: "hero",        class: "hero" },
     { id: "work",        nav: "Work",         render: "projects",    heading: "Selected work" },
     { id: "experience",  nav: "Experience",   render: "experience",  heading: "Experience" },
-    { id: "writing",     nav: "Writing",      render: "writing",     heading: "Writing" },
     { id: "speaking",    nav: "Talks",        render: "talks",       heading: "Talks and community" },
+    { id: "writing",     nav: "Writing",      render: "writing",     heading: "Writing" },
     { id: "toolkit",     nav: "Toolkit",      render: "skills",      heading: "Toolkit" },
     { id: "credentials", nav: "Credentials",  render: "credentials", heading: "Credentials",
       columns: ["Certifications", "Education"] },
@@ -126,9 +126,9 @@ window.PROFILE = {
         note: "Technical support for renewal and adoption across the account portfolio." },
       { value: "20+", label: "NHS processes automated",
         note: "Live across ServiceNow, Oracle SBS, HealthRoster, SystmOne, ESR and eRS." },
-      { value: "11", label: "Years in software",
+      { value: "11+", label: "Years in software",
         note: "From C# product engineering to agentic automation." },
-      { value: "8", label: "Years in automation",
+      { value: "8+", label: "Years in automation",
         note: "RPA delivery, Azure platform engineering, now agentic patterns." },
       { value: "5", label: "Professional certifications",
         note: "Anthropic, UiPath and Microsoft." }
@@ -317,6 +317,20 @@ window.PROFILE = {
         "A customer's robot launched a Python script and the logs vanished from the execution trail. A log-bridging pattern — structured JSON, a cursor to avoid replays, severity preserved — that puts external application logs back inside UiPath job logs.",
       tags: ["Observability", "Python", "RobotOps"],
       url: "https://jdoshi2091.hashnode.dev/making-external-script-execution-observable-in-uipath"
+    },
+    {
+      title: "Model Context Protocol: how AI agents reach enterprise systems",
+      blurb:
+        "LLMs are powerful but isolated. A mental model for MCP: host, client and server, tools, resources and prompts, the enterprise security questions, and a hands-on basic server built with FastMCP in Python.",
+      tags: ["MCP", "Agentic AI", "FastMCP", "Python"],
+      url: "https://jdoshi2091.hashnode.dev/model-context-protocol"
+    },
+    {
+      title: "Prompt engineering: a comprehensive guide for developers",
+      blurb:
+        "Prompting is communicating intent, supplying context and structuring complex tasks, not just asking better questions. A developer-focused guide to making LLM output reliable, with an A-to-Z cheat sheet.",
+      tags: ["Prompt engineering", "LLM", "RAG"],
+      url: "https://jdoshi2091.hashnode.dev/prompt-engineering-a-practical-guide-to-better-llm-outputs"
     }
   ],
 
@@ -324,6 +338,29 @@ window.PROFILE = {
      Required: event, host, date, format, detail, links[].
      A link entry has { label, url }; use [] when a talk has no public link. */
   speaking: [
+    {
+      event: "Agentic Testing with UiPath Test Cloud",
+      host: "UiPath Community Mumbai, Agent Builders Meet",
+      date: "10 Oct 2026",
+      format: "45-minute in-person session at WeWork Mumbai, 110+ builders",
+      detail:
+        "Coding agents generate apps faster than teams can review them. A live demo of an agentic testing flow: a requirement lands in Data Fabric, an agent scores it for clarity, a second agent writes test cases into Test Manager, Autopilot runs them and Maestro orchestrates it with a full trail.",
+      links: [
+        { label: "Presentation", url: "https://jd2091.github.io/Uipath-autonomous-testing" },
+        { label: "Solution repo", url: "https://github.com/JD2091/Uipath-autonomous-testing" }
+      ]
+    },
+    {
+      event: "Hands-On Workshop: Build an Agentic Invoice Verification Process with UiPath Maestro Flow",
+      host: "UiPath EMEA & APAC Virtual Events",
+      date: "19 Sep 2026",
+      format: "Virtual workshop, co-hosted with Parth Doshi, 200+ participants",
+      detail:
+        "Compared Maestro Flow, BPMN and Case, then built a running invoice verification process end to end: email trigger, AI-driven validation against purchase orders, a human checkpoint and an auto-drafted response.",
+      links: [
+        { label: "Event page", url: "https://community.uipath.com/events/details/uipath-emeaapac-virtual-events-presents-hands-on-workshop-build-an-agentic-invoice-verification-process-with-uipath-maestro-flow-virtual/" }
+      ]
+    },
     {
       event: "Master Coded Apps: From Fundamentals to Advance",
       host: "UiPath Community Mumbai",
